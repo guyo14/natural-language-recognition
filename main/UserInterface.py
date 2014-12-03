@@ -6,6 +6,9 @@ Created on Nov 17, 2014
 
 from gi.repository import Gtk
 
+import Parser
+
+
 class MainWindow(Gtk.Window):
 	
 	def __init__(self):
@@ -46,6 +49,7 @@ class MainWindow(Gtk.Window):
 		button_open.connect("clicked", self.on_button_open_clicked)
 		button_save.connect("clicked", self.on_button_save_clicked)
 		button_saveas.connect("clicked", self.on_button_saveas_clicked)
+		button_analyse.connect("clicked", self.on_button_analyse_clicked)
 	
 	
 	def create_textview(self):
@@ -104,6 +108,14 @@ class MainWindow(Gtk.Window):
 	
 	def on_button_saveas_clicked(self, widget):
 		self.save_as()
+	
+	
+	def on_button_analyse_clicked(self, widget):
+		tokens = Parser.getTokens('Hola amigo, hermano, como estas.')
+		tmp = ""
+		for token in tokens:
+			tmp += token.token + " | " + str(token.kind) + "\n"
+		self.textbuffer.set_text(tmp)
 	
 	
 	def on_textbuffer_changed(self, widget):
